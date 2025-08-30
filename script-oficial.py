@@ -1,6 +1,7 @@
 import pandas as pd
 import psutil
 import time
+import os
 from datetime import datetime
 import pytz #ajusta fuso horário
 
@@ -82,21 +83,21 @@ def uso_disco():
     dados_disco = psutil.disk_usage('/').percent
     return dados_disco    
 
-horario_agora = datetime.now()
-trata_data = datetime.strftime(horario_agora, "%d-%m-%Y %H:%M:%S")
-dados_cpu = pegar_dados_cpu()
-uso_ram_porcentagem = uso_ram()
-swap_rate = pegar_swap_rate()
-uso_disco_porcentagem = uso_disco()
-dados_disco = pegar_iops_e_latencia()
-throughput = pegar_throughput()
-dados_disco.append(throughput)
 
-print("Iniciando captura de dados...",horario_agora)
+print("Iniciando captura de dados...",datetime.now())
 print("------------------------------------------------------------------------------")
 max_barra = 25
 while True:
-    time.sleep(5)
+    horario_agora = datetime.now()
+    trata_data = datetime.strftime(horario_agora, "%d-%m-%Y %H:%M:%S")
+    dados_cpu = pegar_dados_cpu()
+    uso_ram_porcentagem = uso_ram()
+    swap_rate = pegar_swap_rate()
+    uso_disco_porcentagem = uso_disco()
+    dados_disco = pegar_iops_e_latencia()
+    throughput = pegar_throughput()
+    dados_disco.append(throughput)
+
     dados["timestamp"].append(trata_data)
     dados["uso_cpu_total_%"].append(dados_cpu[2])
     dados["uso_ram_total_%"].append(uso_ram_porcentagem)
@@ -110,9 +111,6 @@ while True:
     dados["disco_write_count"].append(dados_disco[2])
     dados["disco_latencia_ms"].append(dados_disco[3])
 
-    df = pd.DataFrame(dados)
-    df.to_csv("dados-mainframe.csv", encoding="utf-8", sep=";", index=False)
-
     print("Uso da CPU (%) =", "|" * (int(max_barra * ((dados_cpu[2]/100)))),f"{dados_cpu[2]}%")
     print("Uso da RAM (%) =", "|" * (int(max_barra * ((uso_ram_porcentagem/100)))),f"{uso_ram_porcentagem}%")
     print("Swap Rate (MB/s) =", "|" * (int(max_barra * ((swap_rate[2]/100)))),f"{swap_rate[2]} MB/s")
@@ -124,10 +122,8 @@ while True:
     print("Dados lidos no disco =", "|" * (int(max_barra* ((dados_disco[1]/100)))),f"{dados_disco[1]} MB/s")
     print("Dados escritos no disco =", "|" * (int(max_barra* ((dados_disco[2]/100)))),f"{dados_disco[2]} MB/s")
     print("Latência do disco =", "|" * (int(max_barra* ((dados_disco[3]/100)))),f"{dados_disco[3]} ms")
+
+    df = pd.DataFrame(dados)
+    df.to_csv("dados-mainframe.csv", encoding="utf-8", sep=";", index=False)
     
     print("\n------------------------------------------------------------------------------\n")
-
-
-
-
-
