@@ -147,5 +147,5 @@ while True:
             {montar_msg(dados["disco_write_count"][len(dados["disco_write_count"])-1], "Dados escritos no DASD", "MB/s", 10, 100)}
             {montar_msg(dados["disco_latencia_ms"][len(dados["disco_latencia_ms"])-1], "Latência do DASD", "ms",10, 1000)}
     """)
-    df = pd.DataFrame(dados)
-    df.to_csv("dados-mainframe.csv", encoding="utf-8", sep=";", index=False)
+    # df = pd.DataFrame(dados)
+    # df.to_csv("dados-mainframe.csv", encoding="utf-8", sep=";", index=False)
