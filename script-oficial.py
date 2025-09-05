@@ -144,9 +144,9 @@ while True:
         !---------------DADOS DO DASD---------------!
             {montar_msg(dados["uso_disco_total_%"][len(dados["uso_disco_total_%"])-1], "Consumo do DASD", "%", 10, 100)}
             {montar_msg(dados["disco_throughput_mbs"][len(dados["disco_throughput_mbs"])-1], "Throughput do DASD", "MB/s", 10, 100)}
-            {montar_msg(dados["disco_iops_total"][len(dados["disco_iops_total"])-1], "IOPS no Disco", "MB/s", 10, 100)}
-            {montar_msg(dados["disco_read_count"][len(dados["disco_read_count"])-1], "Dados lidos no DASD", "MB/s", 10, 100)}
-            {montar_msg(dados["disco_write_count"][len(dados["disco_write_count"])-1], "Dados escritos no DASD", "MB/s", 10, 100)}
+            {montar_msg(dados["disco_iops_total"][len(dados["disco_iops_total"])-1], "IOPS no Disco", "qtd", 10, 100)}
+            {montar_msg(dados["disco_read_count"][len(dados["disco_read_count"])-1], "Dados lidos no DASD", "qtd", 10, 100)}
+            {montar_msg(dados["disco_write_count"][len(dados["disco_write_count"])-1], "Dados escritos no DASD", "qtd", 10, 100)}
             {montar_msg(dados["disco_latencia_ms"][len(dados["disco_latencia_ms"])-1], "Latência do DASD", "ms",10, 1000)}
     """)
     df = pd.DataFrame(dados)
